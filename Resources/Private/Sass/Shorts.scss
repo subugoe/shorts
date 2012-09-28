@@ -1,0 +1,12 @@
+$background: #1a3771;
+$foreground: #fff;
+
+.displayShortUrl {
+	background: $foreground;
+	border: 0;
+	color: $background;
+	text-align: center;
+	font-size: 1em;
+	padding: 0;
+	margin: 0;
+}

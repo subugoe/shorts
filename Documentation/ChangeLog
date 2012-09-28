@@ -1,0 +1,45 @@
+2012-04-20 Ingo Pfennigstorf <pfennigstorf@sub.uni-goettingen.de>
+	* Aufloesen der Kurz URL in sprechende URL (WWW-814)
+
+2012-02-09 Ingo Pfennigstorf <pfennigstorf@sub.uni-goettingen.de>
+	* Schreibweise von short url geaendert (WWW-1063)
+
+2012-01-12 Ingo Pfennigstorf <pfennigstorf@sub.uni-goettingen.de>
+	* Attribut nofollow hinzugefuegt
+
+2011-12-16 Ingo Pfennigstorf <pfennigstorf@sub.uni-goettingen.de>
+	* Short Url Cache invalidierung (WWW-1030)
+
+2011-11-04 Ingo Pfennigstorf <pfennigstorf@sub.uni-goettingen.de>
+	* CSS Komprimierung durch FED deaktiviert (WWW-797)
+
+2011-10-31 Ingo Pfennigstorf <pfennigstorf@sub.uni-goettingen.de>
+	* Tipsy Icon wird bei Aufruf nicht gefunden und wirf 404 (WWW-776)
+
+2011-09-09 Ingo Pfennigstorf <pfennigstorf@sub.uni-goettingen.de>
+	* Javascript und CSS Anpassungen
+
+2011-09-07 Ingo Pfennigstorf <pfennigstorf@sub.uni-goettingen.de>
+	* Tabellendefinition aktualisiert
+
+2011-09-05 Ingo Pfennigstorf <pfennigstorf@sub.uni-goettingen.de>
+	* Tests hinzugefuegt
+	* Codeoptimierungen
+
+2011-08-30 Ingo Pfennigstorf <pfennigstorf@sub.uni-goettingen.de>
+	* Refactoring
+
+2011-08-22 Ingo Pfennigstorf <pfennigstorf@sub.uni-goettingen.de>
+	* Caching aktiviert
+
+2011-08-12 Ingo Pfennigstorf <pfennigstorf@sub.uni-goettingen.de>
+	* Devlogspeicher deaktiviert
+
+2011-08-11 Ingo Pfennigstorf <pfennigstorf@sub.uni-goettingen.de>
+	* Caching configuration
+
+2011-05-05 Ingo Pfennigstorf <pfennigstorf@sub.uni-goettingen.de>
+	* Template "Display" in Uppercase - lowercase ist deprecated
+
+2011-04-11 Ingo Pfennigstorf <pfennigstorf@sub.uni-goettingen.de>
+	* Initial Import

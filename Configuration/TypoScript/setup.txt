@@ -1,0 +1,28 @@
+plugin.tx_shorts {
+	view {
+		templateRootPath = {$plugin.tx_shorts.view.templateRootPath}
+	}
+	persistence {
+		storagePid = {$plugin.tx_shorts.persistence.storagePid}
+	}
+}
+
+plugin.tx_shorts._CSS_DEFAULT_STYLE (
+	input.f3-form-error {
+		background-color:#FF9F9F;
+		border: 1px #FF0000 solid;
+	}
+
+	.tx-shorts-pi1 table {
+		border-collapse:separate;
+		border-spacing:10px;
+	}
+
+	.tx-shorts-pi1 table th {
+		font-weight:bold;
+	}
+
+	.tx-shorts-pi1 table td {
+		vertical-align:top;
+	}
+)

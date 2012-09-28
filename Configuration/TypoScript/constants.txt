@@ -1,0 +1,10 @@
+plugin.tx_shorts {
+	view {
+		# cat=plugin.tx_shorts/file; type=string; label=Path to template root (FE)
+		templateRootPath = EXT:shorts/Resources/Private/Templates/
+	}
+	persistence {
+		# cat=plugin.tx_shorts//a; type=int+; label=Default storage PID
+		storagePid = 
+	}
+}
