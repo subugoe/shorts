@@ -6,7 +6,7 @@
 	</meta>
 	<data type="array">
 		<languageKey index="default" type="array">
-			<label index="tx_shorts_domain_model_url">U R L</label>
+			<label index="tx_shorts_domain_model_url">URL</label>
 			<label index="tx_shorts_domain_model_url.url">Url</label>
 			<label index="tx_shorts_domain_model_url.short_url">Short URL</label>
 		</languageKey>
