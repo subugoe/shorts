@@ -34,17 +34,14 @@ class Tx_Shorts_Controller_FaecherControllerTest extends Tx_Extbase_Tests_Unit_B
 	/**
 	 * @var Tx_Shorts_Controller_UrlController
 	 */
-	protected $classObj = NULL ;
+	protected $fixture;
 
 	/**
 	 * @return void
 	 */
 	public function setUp() {
-
-		$class =  'Tx_Shorts_Controller_UrlController';
-		$this->classObj = new Tx_Shorts_Controller_UrlController();
-		$this->fixture = $this->getMock($class);
-
+		$class = 'Tx_Shorts_Controller_UrlController';
+		$this->fixture = new $class;
 	}
 
 	/**
@@ -52,38 +49,8 @@ class Tx_Shorts_Controller_FaecherControllerTest extends Tx_Extbase_Tests_Unit_B
 	 * @return void
 	 */
 	public function testPageIdSetting(){
-
-		$this->classObj->pageId = '3';
-
-		$this->assertEquals($this->classObj->pageId, '3');
-
-	}
-
-	/**
-	 * @test
-	 * @return void
-	 */
-	public function testCHashRemovalFunctionIfSomethingHappensWhenChashIsSet(){
-
-		$url = 'index.php?id=3&cHash=2343483sefsdf&anotherParam=egtt45rwsfvcty6';
-		$cleaner = $this->classObj->removeChashParamaterFromString($url);
-
-		$this->assertNotEquals($url, $cleaner);
-
-	}
-
-	/**
-	 * @test
-	 * @return void
-	 */
-	public function testOtherParameterRemovalByCHashRemoval(){
-
-		$url = 'index.php?id=1197&anotherParam=egtt45rwsfvcty6';
-		$cleaner = $this->classObj->removeChashParamaterFromString($url);
-
-		$this->assertNotEmpty($cleaner);
-
-		$this->assertEquals($url, $cleaner);
+		$this->fixture->pageId = 3;
+		$this->assertEquals($this->fixture->pageId, 3);
 	}
 
 }
