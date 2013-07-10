@@ -62,7 +62,6 @@ class Tx_Shorts_Controller_UrlController extends Tx_Extbase_MVC_Controller_Actio
 	 */
 	public function initializeAction() {
 
-		$this->initializeCache();
 			// assign the page Id
 		$this->pageId = $GLOBALS['TSFE']->id;
 
@@ -72,25 +71,6 @@ class Tx_Shorts_Controller_UrlController extends Tx_Extbase_MVC_Controller_Actio
 
 		if (t3lib_div::getIndpEnv('QUERY_STRING')){
 			$this->currentPage = $this->shorteningService->removeChashParamaterFromString($this->currentPage . '&' . t3lib_div::getIndpEnv('QUERY_STRING'));
-		}
-	}
-
-	/**
-	* Initialize cache instance to be ready to use
-	*
-	* @return void
-	*/
-	protected function initializeCache() {
-	  t3lib_cache::initializeCachingFramework();
- 		try {
-			$this->cacheInstance = $GLOBALS['typo3CacheManager']->getCache('shorts');
-		} catch (t3lib_cache_exception_NoSuchCache $e) {
-			$this->cacheInstance = $GLOBALS['typo3CacheFactory']->create(
-			'shorts',
-				$GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['shorts']['frontend'],
-				$GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['shorts']['backend'],
-				$GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['shorts']['options']
-			);
 		}
 	}
 
@@ -105,20 +85,13 @@ class Tx_Shorts_Controller_UrlController extends Tx_Extbase_MVC_Controller_Actio
 
 		$shortenUrl = $this->urlRepository->findShortUrlByPage($this->currentPage);
 
-		if ($shortenUrl === '') {
+		if (empty($shortenUrl)) {
 			$shortenUrl = $this->generateShortUrl();
 		}
 
-		if ($this->cacheInstance->has('shorts_' . $shortenUrl)) {
-			return $this->cacheInstance->get('shorts_' . $shortenUrl);
-		} else {
-			$this->view
-					->assign('display', $shortenUrl)
-					->assign('domain', $domainName);
-
-			$this->cacheInstance->set('shorts_' . $shortenUrl, $this->view->render(), array(), 0);
-		}
-
+		$this->view
+				->assign('display', $shortenUrl)
+				->assign('domain', $domainName);
 	}
 
 	/**
