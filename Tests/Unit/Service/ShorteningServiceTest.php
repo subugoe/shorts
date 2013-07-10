@@ -28,11 +28,10 @@
 /**
  * Tests for shortening service
  */
-class Tx_Shorts_Tests_Service_ShorteningServiceTest extends Tx_Extbase_Tests_Unit_BaseTestCase {
+class Tx_Shorts_Tests_Unit_Service_ShorteningServiceTest extends Tx_Extbase_Tests_Unit_BaseTestCase {
 
 
 	public function setUp() {
-
 		$className = 'Tx_Shorts_Service_ShorteningService';
 		$this->fixture = new $className;
 	}
