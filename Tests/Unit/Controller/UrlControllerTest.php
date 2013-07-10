@@ -30,7 +30,7 @@
  * @author Ingo Pfennigstorf <pfennigstorf@sub.uni-goettingen.de>
  * @package shorts
  */
-class Tx_Shorts_Controller_FaecherControllerTest extends Tx_Extbase_Tests_Unit_BaseTestCase {
+class Tx_Shorts_Tests_Unit_Controller_UrlControllerTest extends Tx_Extbase_Tests_Unit_BaseTestCase {
 	/**
 	 * @var Tx_Shorts_Controller_UrlController
 	 */
