@@ -22,58 +22,55 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  * ************************************************************* */
-require_once(t3lib_extMgm::extPath('pagepath', 'class.tx_pagepath_api.php'));
+require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('pagepath', 'class.tx_pagepath_api.php'));
 /**
  * Ausgabe des Parameter der langen URL
  *
  * @param string $shortUrl
- * @return string $longUrl 
+ * @return string $longUrl
  */
 function redirectToLongURL($shortUrl) {
 
-	$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
-						// What
-					'pid, uid, short_url, url',
-						// From
-					'tx_shorts_domain_model_url',
-						// Where
-					'short_url = "' . $shortUrl . '"',
-						// order by
-					'uid DESC', '',
-						// limit
-					'1'
-	);
+    $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
+    // What
+        'pid, uid, short_url, url',
+        // From
+        'tx_shorts_domain_model_url',
+        // Where
+        'short_url = "' . $shortUrl . '"',
+        // order by
+        'uid DESC', '',
+        // limit
+        '1'
+    );
 
-	$match = '/index.php\?id=[0-9]*/';
+    $match = '/index.php\?id=[0-9]*/';
 
-	while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+    while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
 
-		$parameters = preg_replace($match, '', $row['url']);
-		$pagePath = tx_pagepath_api::getPagePath($row['pid'], $parameters);
-	}
+        $parameters = preg_replace($match, '', $row['url']);
+        $pagePath = tx_pagepath_api::getPagePath($row['pid'], $parameters);
+    }
 
-	return $pagePath;
+    return $pagePath;
 }
 
-	//Datenbank verbinden
-tslib_eidtools::connectDB();
+$shortUrl = \TYPO3\CMS\Core\Utility\GeneralUtility::_GET('shortUrl');
 
-$shortUrl = t3lib_div::_GET('shortUrl');
-
-	//Alles was laenger als 5 Zeichen ist sollte potenziell verdaechtig sein
+//Alles was laenger als 5 Zeichen ist sollte potenziell verdaechtig sein
 if (strlen($shortUrl) <= 5) {
 
-	if ($weiterleitung = redirectToLongURL($shortUrl)) {
+    if ($weiterleitung = redirectToLongURL($shortUrl)) {
 
-		header('HTTP/1.1 301 Moved Permanently');
-		header('Location: ' . $weiterleitung);
-		die;
-	} else {
-			//Schmeisse einen 404 Fehler - @dirty
-		header("HTTP/1.0 404 Not Found");
-		
-			//404 Seite einbinden
-		echo t3lib_div::getURL($hostname.'404/');
-	}
+        header('HTTP/1.1 301 Moved Permanently');
+        header('Location: ' . $weiterleitung);
+        die;
+    } else {
+        //Schmeisse einen 404 Fehler - @dirty
+        header("HTTP/1.0 404 Not Found");
+
+        //404 Seite einbinden
+        echo \TYPO3\CMS\Core\Utility\GeneralUtility::getURL($hostname . '404/');
+    }
 }
 ?>

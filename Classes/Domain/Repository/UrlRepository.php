@@ -1,11 +1,11 @@
 <?php
-
+namespace Subugoe\Shorts\Domain\Repository;
 /* * *************************************************************
  *  Copyright notice
  *
  *  (c) 2013 Ingo Pfennigstorf <pfennigstorf@sub-goettingen.de>
  *      Goettingen State Library
- *  
+ *
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -24,11 +24,12 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  * ************************************************************* */
+use TYPO3\CMS\Extbase\DomainObject\AbstractValueObject;
 
 /**
  * Repository for URL
  */
-class Tx_Shorts_Domain_Repository_UrlRepository extends Tx_Extbase_DomainObject_AbstractValueObject {
+class UrlRepository extends AbstractValueObject {
 
 	/**
 	 * Finds a short Url by a page string

@@ -1,5 +1,5 @@
 <?php
-
+namespace Subugoe\Shorts\Service;
 /* * *************************************************************
  *  Copyright notice
  *
@@ -28,7 +28,7 @@
 /**
  * Service for shortening and verifying Urls
  */
-class Tx_Shorts_Service_ShorteningService {
+class ShorteningService {
 
 	/**
 	 * Removes Chash Parameter from a string
@@ -105,8 +105,9 @@ class Tx_Shorts_Service_ShorteningService {
 
 	/**
 	 * Schreibe URL und zugehoerigen Kurzwert in die Datenbank
-	 * @param type $urlParams
-	 * @param type $urlHash
+	 * @param string $urlParams
+	 * @param string $urlHash
+     * @param int $pageId
 	 */
 	public function insertShortUrlIntoDB($urlParams, $urlHash, $pageId) {
 

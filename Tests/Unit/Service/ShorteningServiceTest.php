@@ -1,11 +1,11 @@
 <?php
-
+namespace Subugoe\Shorts\Tests\Unit\Controller;
 /* * *************************************************************
  *  Copyright notice
  *
  *  (c) 2013 Ingo Pfennigstorf <pfennigstorf@sub-goettingen.de>
  *      Goettingen State Library
- *  
+ *
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -28,11 +28,12 @@
 /**
  * Tests for shortening service
  */
-class Tx_Shorts_Tests_Unit_Service_ShorteningServiceTest extends Tx_Extbase_Tests_Unit_BaseTestCase {
+class ShorteningServiceTest extends \TYPO3\CMS\Core\Tests\Unit\Resource\BaseTestCase {
 
+    protected $fixture;
 
 	public function setUp() {
-		$className = 'Tx_Shorts_Service_ShorteningService';
+		$className = 'Subugoe\\Shorts\\Service\\ShorteningService';
 		$this->fixture = new $className;
 	}
 

@@ -1,9 +1,11 @@
 <?php
+namespace Subugoe\Shorts\Domain\Model;
+
 /***************************************************************
 *  Copyright notice
 *
 *  (c) 2011 Ingo Pfennigstorf <pfennigstorf@sub.uni-goettingen.de>, Goettingen State and University Library, Germany http://www.sub.uni-goettingen.de
-*  
+*
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -27,7 +29,7 @@
 /**
  * URL Objekt
  */
- class Tx_Shorts_Domain_Model_Url extends Tx_Extbase_DomainObject_AbstractEntity {
+ class Url extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 
 	/**
 	 * Uniform Ressource Locator
@@ -92,4 +94,3 @@
 	}
 
 }
-?>
