@@ -26,7 +26,6 @@ namespace Subugoe\Shorts\Controller;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /**
  * Controller for the URL object
@@ -79,8 +78,6 @@ class UrlController extends ActionController {
 			$this->currentPage = $this->shorteningService->removeChashParamaterFromString($this->currentPage . '&' . GeneralUtility::getIndpEnv('QUERY_STRING'));
 			$this->currentPage = $this->shorteningService->removeConfiguredParametersFromString($this->currentPage, $this->settings['parametersToExclude']);
 		}
-        DebuggerUtility::var_dump($this->currentPage);
-
 	}
 
 	/**
