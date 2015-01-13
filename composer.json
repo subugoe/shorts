@@ -1,0 +1,14 @@
+{
+    "name": "subugoe/shorts",
+    "description": "URL Shortener",
+    "require": {
+        "jakeasmith/http_build_url": "0.1.*"
+    },
+    "license": "GPL",
+    "authors": [
+        {
+            "name": "Ingo Pfennigstorf",
+            "email": "i.pfennigstorf@gmail.com"
+        }
+    ]
+}

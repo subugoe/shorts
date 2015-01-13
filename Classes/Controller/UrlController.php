@@ -23,12 +23,15 @@ namespace Subugoe\Shorts\Controller;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /**
  * Controller for the URL object
  */
-class UrlController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
+class UrlController extends ActionController {
 
 	/**
 	 * @var int
@@ -39,11 +42,6 @@ class UrlController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
 	 * @var string
 	 */
 	public $currentPage;
-
-	/**
-	 * @var
-	 */
-	protected $cacheInstance;
 
 	/**
 	 * @var \Subugoe\Shorts\Service\ShorteningService
@@ -58,6 +56,11 @@ class UrlController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
 	protected $urlRepository;
 
 	/**
+	 * @var \TYPO3\CMS\Core\Page\PageRenderer
+	 */
+	protected $pageRenderer;
+
+	/**
 	 * Initialisierung globaler Werte
 	 *
 	 * @return void
@@ -66,6 +69,7 @@ class UrlController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
 
 		// assign the page Id
 		$this->pageId = $GLOBALS['TSFE']->id;
+		$this->pageRenderer = $GLOBALS['TSFE']->getPageRenderer();
 
 		$this->addResourcesToHead();
 
@@ -73,11 +77,14 @@ class UrlController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
 
 		if (GeneralUtility::getIndpEnv('QUERY_STRING')) {
 			$this->currentPage = $this->shorteningService->removeChashParamaterFromString($this->currentPage . '&' . GeneralUtility::getIndpEnv('QUERY_STRING'));
+			$this->currentPage = $this->shorteningService->removeConfiguredParametersFromString($this->currentPage, $this->settings['parametersToExclude']);
 		}
+        DebuggerUtility::var_dump($this->currentPage);
+
 	}
 
 	/**
-	 * Zeigt die verkuerzte URL an
+	 * Show the shortened URL
 	 *
 	 * @return void
 	 */
@@ -105,17 +112,19 @@ class UrlController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
 
 		$urlHash = $this->shorteningService->generateHash($this->currentPage);
 
-		//Hashwert mit langer URL in die DB
+		// Hashwert mit langer URL in die DB
 		$this->shorteningService->insertShortUrlIntoDB($this->currentPage, $urlHash, $this->pageId);
 
 		return $urlHash;
 	}
 
+	/**
+	 * Include CSS and JavaScript
+	 * @return void
+	 */
 	protected function addResourcesToHead() {
-		// Resources to head
-		// Not doing this in the view part because it would break caching
-		$GLOBALS['TSFE']->pSetup['includeJS.']['shorts'] = 'typo3conf/ext/shorts/Resources/Public/Js/Shorts.js';
-		$GLOBALS['TSFE']->pSetup['includeCSS.']['shorts'] = 'typo3conf/ext/shorts/Resources/Public/Css/Shorts.css';
+		$this->pageRenderer->addJsFile(ExtensionManagementUtility::extRelPath('shorts') . 'Resources/Public/JavaScript/Shorts.js');
+		$this->pageRenderer->addCssFile(ExtensionManagementUtility::extRelPath('shorts') . 'Resources/Public/Css/Shorts.css');
 	}
 
 }
