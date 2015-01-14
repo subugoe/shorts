@@ -106,7 +106,7 @@
 		</exec>
 	</target>
 	<target name="jslint" description="Run the JSLint tool on JS files">
-		<fileset dir="${basedir}/Resources/Public/Js/" id="jsfiles.raw">
+		<fileset dir="${basedir}/Resources/Public/JavaScript/" id="jsfiles.raw">
 			<include name="**/*.js"/>
 			<exclude name="**/*.min.js"/>
 		</fileset>
