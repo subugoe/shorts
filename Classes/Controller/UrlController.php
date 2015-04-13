@@ -120,8 +120,8 @@ class UrlController extends ActionController {
 	 * @return void
 	 */
 	protected function addResourcesToHead() {
-		$this->pageRenderer->addJsFile(ExtensionManagementUtility::extRelPath('shorts') . 'Resources/Public/JavaScript/Shorts.js');
-		$this->pageRenderer->addCssFile(ExtensionManagementUtility::extRelPath('shorts') . 'Resources/Public/Css/Shorts.css');
+		$this->pageRenderer->addJsFile(ExtensionManagementUtility::siteRelPath('shorts') . 'Resources/Public/JavaScript/Shorts.js');
+		$this->pageRenderer->addCssFile(ExtensionManagementUtility::siteRelPath('shorts') . 'Resources/Public/Css/Shorts.css');
 	}
 
 }
