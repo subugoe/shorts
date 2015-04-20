@@ -5,6 +5,9 @@ plugin.tx_shorts {
 	persistence {
 		storagePid = {$plugin.tx_shorts.persistence.storagePid}
 	}
+	settings {
+		parametersToExclude = {$plugin.tx_shorts.settings.parametersToExclude}
+	}
 }
 
 plugin.tx_shorts._CSS_DEFAULT_STYLE (

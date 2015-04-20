@@ -4,8 +4,8 @@ if (!defined('TYPO3_MODE')) {
 	die('Access denied.');
 }
 
-Tx_Extbase_Utility_Extension::configurePlugin(
-	$_EXTKEY,
+\TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+	'Subugoe.' . $_EXTKEY,
 	'Shortener',
 	array (
 		'Url' => 'display'
@@ -20,5 +20,3 @@ $TYPO3_CONF_VARS['EXTCONF']['realurl']['encodeSpURL_postProc'][$_EXTKEY] = 'EXT:
 
 	// redirects ueber eid - Schneller und schlanker
 $TYPO3_CONF_VARS['FE']['eID_include'][$_EXTKEY] = 'EXT:shorts/Resources/Public/Eid/Redirect.php';
-
-?>

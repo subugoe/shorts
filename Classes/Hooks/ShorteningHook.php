@@ -24,7 +24,7 @@
  * ************************************************************* */
 
 /**
- * Ruft vor dem Kodieren von RealURL den Shortenenerservice 
+ * Ruft vor dem Kodieren von RealURL den Shortenenerservice
  *
  * @author Ingo Pfennigstorf <pfennigstorf@sub.uni-goettingen.de>
  */
@@ -36,7 +36,7 @@ class user_Tx_Shortener_Hooks_ShorteningHook {
 	protected $pageId;
 
 	/**
-	 * @var Tx_Shorts_Service_ShorteningService
+	 * @var \Subugoe\Shorts\Service\ShorteningService
 	 */
 	protected $shorteningService;
 
@@ -44,13 +44,13 @@ class user_Tx_Shortener_Hooks_ShorteningHook {
 	 * Initializes defaults
 	 */
 	public function initialize() {
-		$this->shorteningService = t3lib_div::makeInstance('Tx_Shorts_Service_ShorteningService');
+		$this->shorteningService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Subugoe\\Shorts\\Service\\ShorteningService');
 	}
 
 	/**
 	 * Start des Hookabfangs
-	 * @param type $hookParams
-	 * @param type $pObj 
+	 * @param array $hookParams
+	 * @param type $pObj
 	 */
 	public function generateShortUrl($hookParams, $pObj) {
 
