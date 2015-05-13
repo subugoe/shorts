@@ -15,8 +15,8 @@ if (!defined('TYPO3_MODE')) {
 	)
 );
 
-	// Hook von RealURL zum Kuerzen nutzen
+// Hook von RealURL zum Kuerzen nutzen
 $TYPO3_CONF_VARS['EXTCONF']['realurl']['encodeSpURL_postProc'][$_EXTKEY] = 'EXT:shorts/Classes/Hooks/ShorteningHook.php:user_Tx_Shortener_Hooks_ShorteningHook->generateShortUrl';
 
-	// redirects ueber eid - Schneller und schlanker
+// redirects ueber eid - Schneller und schlanker
 $TYPO3_CONF_VARS['FE']['eID_include'][$_EXTKEY] = 'EXT:shorts/Resources/Public/Eid/Redirect.php';

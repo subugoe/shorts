@@ -26,8 +26,8 @@ namespace Subugoe\Shorts\Service;
  *  This copyright notice MUST APPEAR in all copies of the script!
  * ************************************************************* */
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
-use TYPO3\CMS\Extbase\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Utility\ArrayUtility;
 
 require_once(ExtensionManagementUtility::extPath('shorts') . 'vendor/autoload.php');
 
@@ -56,26 +56,26 @@ class ShorteningService {
 		return $return;
 	}
 
-    /**
-     * @param string $urlParameters
-     * @param array $additionalParameters
-     *
-     * @return string
-     */
-    public function removeConfiguredParametersFromString($url, $additionalParameters) {
-        $parameters = ArrayUtility::trimExplode(',', $additionalParameters);
-        $urlParameters = parse_url($url);
-        $queryParameters = GeneralUtility::explodeUrl2Array($urlParameters['query']);
-        foreach ($parameters as $parameter) {
-            if (array_key_exists($parameter, $queryParameters)) {
-                unset($queryParameters[$parameter]);
-            }
-        }
+	/**
+	 * @param string $urlParameters
+	 * @param array $additionalParameters
+	 *
+	 * @return string
+	 */
+	public function removeConfiguredParametersFromString($url, $additionalParameters) {
+		$parameters = ArrayUtility::trimExplode(',', $additionalParameters);
+		$urlParameters = parse_url($url);
+		$queryParameters = GeneralUtility::explodeUrl2Array($urlParameters['query']);
+		foreach ($parameters as $parameter) {
+			if (array_key_exists($parameter, $queryParameters)) {
+				unset($queryParameters[$parameter]);
+			}
+		}
 
-        $compiledUrl = $urlParameters['path'] . '?' . http_build_query($queryParameters);
+		$compiledUrl = $urlParameters['path'] . '?' . http_build_query($queryParameters);
 
-        return urldecode($compiledUrl);
-    }
+		return urldecode($compiledUrl);
+	}
 
 	/**
 	 * Create a new unique String and return it
@@ -134,7 +134,7 @@ class ShorteningService {
 	 * Schreibe URL und zugehoerigen Kurzwert in die Datenbank
 	 * @param string $urlParams
 	 * @param string $urlHash
-     * @param int $pageId
+	 * @param int $pageId
 	 */
 	public function insertShortUrlIntoDB($urlParams, $urlHash, $pageId) {
 

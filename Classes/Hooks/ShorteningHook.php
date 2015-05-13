@@ -44,13 +44,13 @@ class user_Tx_Shortener_Hooks_ShorteningHook {
 	 * Initializes defaults
 	 */
 	public function initialize() {
-		$this->shorteningService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('Subugoe\\Shorts\\Service\\ShorteningService');
+		$this->shorteningService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\Subugoe\Shorts\Service\ShorteningService::class);
 	}
 
 	/**
 	 * Start des Hookabfangs
 	 * @param array $hookParams
-	 * @param type $pObj
+	 * @param void
 	 */
 	public function generateShortUrl($hookParams, $pObj) {
 
@@ -71,4 +71,3 @@ class user_Tx_Shortener_Hooks_ShorteningHook {
 	}
 
 }
-?>
