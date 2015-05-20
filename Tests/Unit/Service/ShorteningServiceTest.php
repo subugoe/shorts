@@ -55,6 +55,9 @@ class ShorteningServiceTest extends BaseTestCase {
 		$this->assertSame('index.php?id=1616', $this->fixture->removeConfiguredParametersFromString($url, $parameterList));
 	}
 
+	/**
+	 * @test
+	 */
 	public function noParametersAreRemovedBecauseTheyDontExist() {
 		$parameterList = 'tx_subforms_feedback[pageId], tx_subforms_feedback[action], tx_subforms_feedback[controller], noCache, tx_solr[q], tx_subtabs_tabs[__referrer], tx_solr[filter]';
 		$url = 'index.php?id=1616';
@@ -68,6 +71,16 @@ class ShorteningServiceTest extends BaseTestCase {
 	public function multipleConfiguredParametersAreRemoved() {
 		$parameterList = 'tx_subforms_feedback[pageId], tx_subforms_feedback[action], tx_subforms_feedback[controller], noCache, tx_solr[q], tx_subtabs_tabs[__referrer], tx_solr[filter]';
 		$url = 'index.php?id=1616&tx_solr[q]=sheytan&tx_subforms_feedback[action]=action';
+
+		$this->assertSame('index.php?id=1616', $this->fixture->removeConfiguredParametersFromString($url, $parameterList));
+	}
+
+	/**
+	 * @test
+	 */
+	public function simpleCharactersWithoutBracketsAreRemoved() {
+		$parameterList = 'tx_subforms_feedback[pageId], tx_subforms_feedback[action], tx_subforms_feedback[controller], noCache, tx_solr[q], tx_subtabs_tabs[__referrer], tx_solr[filter], q';
+		$url = 'index.php?id=1616&q=sheytan&tx_subforms_feedback[action]=action';
 
 		$this->assertSame('index.php?id=1616', $this->fixture->removeConfiguredParametersFromString($url, $parameterList));
 	}
