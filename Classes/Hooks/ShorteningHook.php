@@ -56,17 +56,20 @@ class user_Tx_Shortener_Hooks_ShorteningHook {
 	 */
 	public function generateShortUrl($hookParams, $pObj) {
 
-		$this->initialize();
+		if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
-		$urlParameters = $this->shorteningService->removeChashParamaterFromString($hookParams['params']['LD']['totalURL']);
+			$this->initialize();
 
-		// save the uid of the page
-		$this->pageId = $hookParams['params']['args']['page']['uid'];
+			$urlParameters = $this->shorteningService->removeChashParamaterFromString($hookParams['params']['LD']['totalURL']);
 
-		if ($this->shorteningService->isAlreadyInDB($urlParameters) === FALSE) {
-			$urlHash = $this->shorteningService->generateHash($urlParameters);
+			// save the uid of the page
+			$this->pageId = $hookParams['params']['args']['page']['uid'];
 
-			$this->shorteningService->insertShortUrlIntoDB($urlParameters, $urlHash, $this->pageId);
+			if ($this->shorteningService->isAlreadyInDB($urlParameters) === FALSE) {
+				$urlHash = $this->shorteningService->generateHash($urlParameters);
+
+				$this->shorteningService->insertShortUrlIntoDB($urlParameters, $urlHash, $this->pageId);
+			}
 		}
 	}
 
