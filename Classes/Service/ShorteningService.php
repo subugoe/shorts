@@ -96,7 +96,7 @@ class ShorteningService {
 		}
 
 		// if hash already exists create a new one until a unique one is found
-		if (self::isUniqueHash($shortHash) === FALSE) {
+		if ($this->isUniqueHash($shortHash) === FALSE) {
 			self::generateHash();
 		}
 

@@ -1,23 +1,24 @@
-=======================
-Shorts - URL Verkuerzer
-=======================
+======================
+Shorts - URL Shortener
+======================
 
-Nutzt einen Hook in RealURL um kurze URL zu generieren. Die kurzen URL sind 5 Zeichen nach dem Hostname lang.
-Der Aufruf erfolgt aus Performancegruenden mit dem eID Parameter von TYPO3.
+This extension Uses a RealURL hook for generating a short URL. A short URL consists of an identifier with 5
+Characters preceded by the hostname and a dash, such as http://hostname/-Sh3y1
 
 *************
-Konfiguration
+Configuration
 *************
 
-Folgender Eintrag muss in die .htaccess:
+This line needs to be added to the .htaccess:
 
 RewriteRule ^-(.*)$  index.php?eID=shorts&shortUrl=$1 [L,NC,QSA]
 
-Damit werden alle URL, die mit - beginnen an den Shortenerdienst weitergeleitet
+So, each URL beginning with a - are forwarded to the shortening service.
 
-******************************************************
-Einbinden der URL in die Frontendausgabe als Permalink
-******************************************************
+*******************************
+Frontend output on a TYPO3 page
+*******************************
 
-# URL shortener im TypoScript Setup
-temp.FRIGHT.26 < tt_content.list.20.shorts_shortener
+# URL shortener in TypoScript setup like:
+
+lib.shortener < tt_content.list.20.shorts_shortener

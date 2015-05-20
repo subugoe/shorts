@@ -116,4 +116,3 @@ $TCA['tx_shorts_domain_model_url'] = array(
 		),
 	),
 );
-?>

@@ -4,7 +4,7 @@ namespace Subugoe\Shorts\Controller;
  *  Copyright notice
  *
  *  (c) 2011 Ingo Pfennigstorf <pfennigstorf@sub.uni-goettingen.de>,
- * Goettingen State and University Library, Germany http://www.sub.uni-goettingen.de
+ *  Goettingen State and University Library, Germany http://www.sub.uni-goettingen.de
  *
  *  All rights reserved
  *
@@ -108,7 +108,7 @@ class UrlController extends ActionController {
 	 */
 	protected function generateShortUrl() {
 
-		$urlHash = $this->shorteningService->generateHash($this->currentPage);
+		$urlHash = $this->shorteningService->generateHash();
 
 		// Hashwert mit langer URL in die DB
 		$this->shorteningService->insertShortUrlIntoDB($this->currentPage, $urlHash, $this->pageId);

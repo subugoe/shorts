@@ -42,7 +42,7 @@ class UrlRepository extends AbstractValueObject {
 		$result = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows(
 			'short_url, url',
 			'tx_shorts_domain_model_url',
-			'url = \'' . $page . '\'',
+			sprintf('url = \'%s\'', $page),
 			'',
 			'',
 			1

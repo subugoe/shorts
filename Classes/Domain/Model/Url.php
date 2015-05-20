@@ -24,12 +24,12 @@ namespace Subugoe\Shorts\Domain\Model;
 *
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
-
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
 /**
- * URL Objekt
+ * URL Object
  */
- class Url extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
+ class Url extends AbstractEntity {
 
 	/**
 	 * Uniform Ressource Locator
