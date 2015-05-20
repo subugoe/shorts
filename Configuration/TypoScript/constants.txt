@@ -8,6 +8,6 @@ plugin.tx_shorts {
 		storagePid =
 	}
 	settings {
-		parametersToExclude = tx_subforms_feedback[pageId], tx_subforms_feedback[action], tx_subforms_feedback[controller], noCache, tx_solr[q], tx_subtabs_tabs[__referrer], tx_solr[filter]
+		parametersToExclude = tx_subforms_feedback[pageId], tx_subforms_feedback[action], tx_subforms_feedback[controller], noCache, tx_solr[q], tx_subtabs_tabs[__referrer], tx_solr[filter], q
 	}
 }
