@@ -23,10 +23,11 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  * ************************************************************* */
 
+use Subugoe\Shorts\Service\ShorteningService;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 /**
- * Ruft vor dem Kodieren von RealURL den Shortenenerservice
- *
- * @author Ingo Pfennigstorf <pfennigstorf@sub.uni-goettingen.de>
+ * Calling shortener service before url encoding happens
  */
 class user_Tx_Shortener_Hooks_ShorteningHook {
 
@@ -44,13 +45,14 @@ class user_Tx_Shortener_Hooks_ShorteningHook {
 	 * Initializes defaults
 	 */
 	public function initialize() {
-		$this->shorteningService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\Subugoe\Shorts\Service\ShorteningService::class);
+		$this->shorteningService = GeneralUtility::makeInstance(ShorteningService::class);
 	}
 
 	/**
-	 * Start des Hookabfangs
+	 * Starting hook action
 	 * @param array $hookParams
-	 * @param void
+	 * @param \tx_realurl $pObj
+	 * @return void
 	 */
 	public function generateShortUrl($hookParams, $pObj) {
 
@@ -58,14 +60,12 @@ class user_Tx_Shortener_Hooks_ShorteningHook {
 
 		$urlParameters = $this->shorteningService->removeChashParamaterFromString($hookParams['params']['LD']['totalURL']);
 
-			// UID der Seite mit speichern
+		// save the uid of the page
 		$this->pageId = $hookParams['params']['args']['page']['uid'];
 
-			// Checken ob bereits ein Eintrag vorhanden ist
 		if ($this->shorteningService->isAlreadyInDB($urlParameters) === FALSE) {
 			$urlHash = $this->shorteningService->generateHash($urlParameters);
 
-				// Hashwert mit langer URL in die DB
 			$this->shorteningService->insertShortUrlIntoDB($urlParameters, $urlHash, $this->pageId);
 		}
 	}

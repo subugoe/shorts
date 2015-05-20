@@ -1,4 +1,5 @@
 <?php
+namespace Subugoe\Shorts\Tests\Unit\Controller;
 
 /***************************************************************
  *  Copyright notice
@@ -23,16 +24,17 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+use Subugoe\Shorts\Controller\UrlController;
+use TYPO3\CMS\Core\Tests\BaseTestCase;
 
 /**
  * Test case for class Tx_Shorts_Controller_UrlController
  *
- * @author Ingo Pfennigstorf <pfennigstorf@sub.uni-goettingen.de>
  * @package shorts
  */
-class Tx_Shorts_Tests_Unit_Controller_UrlControllerTest extends Tx_Extbase_Tests_Unit_BaseTestCase {
+class UrlControllerTest extends BaseTestCase {
 	/**
-	 * @var Tx_Shorts_Controller_UrlController
+	 * @var UrlController
 	 */
 	protected $fixture;
 
@@ -40,8 +42,7 @@ class Tx_Shorts_Tests_Unit_Controller_UrlControllerTest extends Tx_Extbase_Tests
 	 * @return void
 	 */
 	public function setUp() {
-		$class = 'Tx_Shorts_Controller_UrlController';
-		$this->fixture = new $class;
+		$this->fixture = $this->getAccessibleMock(UrlController::class, [], []);
 	}
 
 	/**
@@ -54,5 +55,3 @@ class Tx_Shorts_Tests_Unit_Controller_UrlControllerTest extends Tx_Extbase_Tests
 	}
 
 }
-
-?>

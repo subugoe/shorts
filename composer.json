@@ -2,8 +2,9 @@
     "name": "subugoe/shorts",
     "type": "typo3-cms-extension",
     "description": "URL Shortener",
-    "require": {
-        "jakeasmith/http_build_url": "0.1.*"
+    "require-dev": {
+        "jakeasmith/http_build_url": "0.1.*",
+        "phpunit/phpunit": "~4.6"
     },
     "license": "GPL",
     "authors": [
