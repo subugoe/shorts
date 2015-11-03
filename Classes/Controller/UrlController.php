@@ -1,5 +1,6 @@
 <?php
 namespace Subugoe\Shorts\Controller;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -31,98 +32,104 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 /**
  * Controller for the URL object
  */
-class UrlController extends ActionController {
+class UrlController extends ActionController
+{
 
-	/**
-	 * @var int
-	 */
-	public $pageId;
+    /**
+     * @var int
+     */
+    public $pageId;
 
-	/**
-	 * @var string
-	 */
-	public $currentPage;
+    /**
+     * @var string
+     */
+    public $currentPage;
 
-	/**
-	 * @var \Subugoe\Shorts\Service\ShorteningService
-	 * @inject
-	 */
-	protected $shorteningService;
+    /**
+     * @var \Subugoe\Shorts\Service\ShorteningService
+     * @inject
+     */
+    protected $shorteningService;
 
-	/**
-	 * @var \Subugoe\Shorts\Domain\Repository\UrlRepository
-	 * @inject
-	 */
-	protected $urlRepository;
+    /**
+     * @var \Subugoe\Shorts\Domain\Repository\UrlRepository
+     * @inject
+     */
+    protected $urlRepository;
 
-	/**
-	 * @var \TYPO3\CMS\Core\Page\PageRenderer
-	 */
-	protected $pageRenderer;
+    /**
+     * @var \TYPO3\CMS\Core\Page\PageRenderer
+     */
+    protected $pageRenderer;
 
-	/**
-	 * Initialisierung globaler Werte
-	 *
-	 * @return void
-	 */
-	public function initializeAction() {
+    /**
+     * Initialisierung globaler Werte
+     *
+     * @return void
+     */
+    public function initializeAction()
+    {
 
-		// assign the page Id
-		$this->pageId = $GLOBALS['TSFE']->id;
-		$this->pageRenderer = $GLOBALS['TSFE']->getPageRenderer();
+        // assign the page Id
+        $this->pageId = $GLOBALS['TSFE']->id;
+        $this->pageRenderer = $GLOBALS['TSFE']->getPageRenderer();
 
-		$this->addResourcesToHead();
+        $this->addResourcesToHead();
 
-		$this->currentPage = substr(GeneralUtility::getIndpEnv('SCRIPT_NAME'), 1) . '?id=' . $this->pageId;
+        $this->currentPage = substr(GeneralUtility::getIndpEnv('SCRIPT_NAME'), 1) . '?id=' . $this->pageId;
 
-		if (GeneralUtility::getIndpEnv('QUERY_STRING')) {
-			$this->currentPage = $this->shorteningService->removeChashParamaterFromString($this->currentPage . '&' . GeneralUtility::getIndpEnv('QUERY_STRING'));
-			$this->currentPage = $this->shorteningService->removeConfiguredParametersFromString($this->currentPage, $this->settings['parametersToExclude']);
-		}
-	}
+        if (GeneralUtility::getIndpEnv('QUERY_STRING')) {
+            $this->currentPage = $this->shorteningService->removeChashParamaterFromString($this->currentPage . '&' . GeneralUtility::getIndpEnv('QUERY_STRING'));
+            $this->currentPage = $this->shorteningService->removeConfiguredParametersFromString($this->currentPage,
+                $this->settings['parametersToExclude']);
+        }
+    }
 
-	/**
-	 * Show the shortened URL
-	 *
-	 * @return void
-	 */
-	public function displayAction() {
+    /**
+     * Show the shortened URL
+     *
+     * @return void
+     */
+    public function displayAction()
+    {
 
-		$domainName = GeneralUtility::getIndpEnv('TYPO3_REQUEST_HOST');
+        $domainName = GeneralUtility::getIndpEnv('TYPO3_REQUEST_HOST');
 
-		$shortenUrl = $this->urlRepository->findShortUrlByPage($this->currentPage);
+        $shortenUrl = $this->urlRepository->findShortUrlByPage($this->currentPage);
 
-		if (empty($shortenUrl)) {
-			$shortenUrl = $this->generateShortUrl();
-		}
+        if (empty($shortenUrl)) {
+            $shortenUrl = $this->generateShortUrl();
+        }
 
-		$this->view
-			->assign('display', $shortenUrl)
-			->assign('domain', $domainName);
-	}
+        $this->view
+            ->assign('display', $shortenUrl)
+            ->assign('domain', $domainName);
+    }
 
-	/**
-	 * Generate a short url
-	 *
-	 * @return string
-	 */
-	protected function generateShortUrl() {
+    /**
+     * Generate a short url
+     *
+     * @return string
+     */
+    protected function generateShortUrl()
+    {
 
-		$urlHash = $this->shorteningService->generateHash();
+        $urlHash = $this->shorteningService->generateHash();
 
-		// Hashwert mit langer URL in die DB
-		$this->shorteningService->insertShortUrlIntoDB($this->currentPage, $urlHash, $this->pageId);
+        // Hashwert mit langer URL in die DB
+        $this->shorteningService->insertShortUrlIntoDB($this->currentPage, $urlHash, $this->pageId);
 
-		return $urlHash;
-	}
+        return $urlHash;
+    }
 
-	/**
-	 * Include CSS and JavaScript
-	 * @return void
-	 */
-	protected function addResourcesToHead() {
-		$this->pageRenderer->addJsFile(ExtensionManagementUtility::siteRelPath('shorts') . 'Resources/Public/JavaScript/Shorts.js');
-		$this->pageRenderer->addCssFile(ExtensionManagementUtility::siteRelPath('shorts') . 'Resources/Public/Css/Shorts.css');
-	}
+    /**
+     * Include CSS and JavaScript
+     * @return void
+     */
+    protected function addResourcesToHead()
+    {
+        $this->pageRenderer->addJsFile(ExtensionManagementUtility::siteRelPath('shorts') . 'Resources/Public/JavaScript/Shorts.js');
+        $this->pageRenderer->addCssFile(ExtensionManagementUtility::siteRelPath('shorts') . 'Resources/Public/Css/Shorts.css');
+    }
 
 }
