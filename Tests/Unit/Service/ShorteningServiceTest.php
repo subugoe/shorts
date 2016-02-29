@@ -31,92 +31,92 @@ use TYPO3\CMS\Core\Tests\BaseTestCase;
 /**
  * Test for shortening service
  */
-class ShorteningServiceTest extends BaseTestCase {
+class ShorteningServiceTest extends BaseTestCase
+{
 
-	/**
-	 * @var ShorteningService
-	 */
-	protected $fixture;
+    /**
+     * @var ShorteningService
+     */
+    protected $fixture;
 
-	public function setUp() {
-		$this->fixture = $this->getMockBuilder(ShorteningService::class)
-			->disableOriginalConstructor()
-			->setMethods(['isUniqueHash'])
-			->getMock();
-	}
+    public function setUp()
+    {
+        $this->fixture = $this->getMockBuilder(ShorteningService::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['isUniqueHash'])
+            ->getMock();
+    }
 
-	/**
-	 * @test
-	 */
-	public function configuredParametersAreRemoved() {
-		$parameterList = 'tx_subforms_feedback[pageId], tx_subforms_feedback[action], tx_subforms_feedback[controller], noCache, tx_solr[q], tx_subtabs_tabs[__referrer], tx_solr[filter]';
-		$url = 'index.php?id=1616&tx_solr[q]=sheytan';
+    /**
+     * @test
+     */
+    public function configuredParametersAreRemoved()
+    {
+        $parameterList = 'tx_subforms_feedback[pageId], tx_subforms_feedback[action], tx_subforms_feedback[controller], noCache, tx_solr[q], tx_subtabs_tabs[__referrer], tx_solr[filter]';
+        $url = 'index.php?id=1616&tx_solr[q]=sheytan';
 
-		$this->assertSame('index.php?id=1616', $this->fixture->removeConfiguredParametersFromString($url, $parameterList));
-	}
+        $this->assertSame('index.php?id=1616',
+            $this->fixture->removeConfiguredParametersFromString($url, $parameterList));
+    }
 
-	/**
-	 * @test
-	 */
-	public function noParametersAreRemovedBecauseTheyDontExist() {
-		$parameterList = 'tx_subforms_feedback[pageId], tx_subforms_feedback[action], tx_subforms_feedback[controller], noCache, tx_solr[q], tx_subtabs_tabs[__referrer], tx_solr[filter]';
-		$url = 'index.php?id=1616';
+    public function noParametersAreRemovedBecauseTheyDontExist()
+    {
+        $parameterList = 'tx_subforms_feedback[pageId], tx_subforms_feedback[action], tx_subforms_feedback[controller], noCache, tx_solr[q], tx_subtabs_tabs[__referrer], tx_solr[filter]';
+        $url = 'index.php?id=1616';
 
-		$this->assertSame('index.php?id=1616', $this->fixture->removeConfiguredParametersFromString($url, $parameterList));
-	}
+        $this->assertSame('index.php?id=1616',
+            $this->fixture->removeConfiguredParametersFromString($url, $parameterList));
+    }
 
-	/**
-	 * @test
-	 */
-	public function multipleConfiguredParametersAreRemoved() {
-		$parameterList = 'tx_subforms_feedback[pageId], tx_subforms_feedback[action], tx_subforms_feedback[controller], noCache, tx_solr[q], tx_subtabs_tabs[__referrer], tx_solr[filter]';
-		$url = 'index.php?id=1616&tx_solr[q]=sheytan&tx_subforms_feedback[action]=action';
+    /**
+     * @test
+     */
+    public function multipleConfiguredParametersAreRemoved()
+    {
+        $parameterList = 'tx_subforms_feedback[pageId], tx_subforms_feedback[action], tx_subforms_feedback[controller], noCache, tx_solr[q], tx_subtabs_tabs[__referrer], tx_solr[filter]';
+        $url = 'index.php?id=1616&tx_solr[q]=sheytan&tx_subforms_feedback[action]=action';
 
-		$this->assertSame('index.php?id=1616', $this->fixture->removeConfiguredParametersFromString($url, $parameterList));
-	}
+        $this->assertSame('index.php?id=1616',
+            $this->fixture->removeConfiguredParametersFromString($url, $parameterList));
+    }
 
-	/**
-	 * @test
-	 */
-	public function simpleCharactersWithoutBracketsAreRemoved() {
-		$parameterList = 'tx_subforms_feedback[pageId], tx_subforms_feedback[action], tx_subforms_feedback[controller], noCache, tx_solr[q], tx_subtabs_tabs[__referrer], tx_solr[filter], q';
-		$url = 'index.php?id=1616&q=sheytan&tx_subforms_feedback[action]=action';
+    /**
+     * @test
+     */
+    public function cHashParameterIsRemovedFromUrl()
+    {
+        $url = 'index.php?id=1616&cHash=' . md5(microtime());
+        $this->assertSame('index.php?id=1616', $this->fixture->removeChashParamaterFromString($url));
 
-		$this->assertSame('index.php?id=1616', $this->fixture->removeConfiguredParametersFromString($url, $parameterList));
-	}
+    }
 
-	/**
-	 * @test
-	 */
-	public function cHashParameterIsRemovedFromUrl() {
-		$url = 'index.php?id=1616&cHash=' . md5(microtime());
-		$this->assertSame('index.php?id=1616', $this->fixture->removeChashParamaterFromString($url));
+    /**
+     * @test
+     */
+    public function cHashParameterIsRemovedFromUrlWhenThereAreOtherParameters()
+    {
+        $url = 'index.php?id=1616&tx_solr[q]=sheytan&tx_subforms_feedback[action]=action&cHash=' . md5(microtime());
 
-	}
+        $this->assertSame('index.php?id=1616&tx_solr[q]=sheytan&tx_subforms_feedback[action]=action',
+            $this->fixture->removeChashParamaterFromString($url));
+    }
 
-	/**
-	 * @test
-	 */
-	public function cHashParameterIsRemovedFromUrlWhenThereAreOtherParameters() {
-		$url = 'index.php?id=1616&tx_solr[q]=sheytan&tx_subforms_feedback[action]=action&cHash=' . md5(microtime());
+    /**
+     * @test
+     */
+    public function hashWithLengthFiveIsGenerated()
+    {
+        $this->fixture->method('isUniqueHash')->willReturn(TRUE);
+        $this->assertSame(5, strlen($this->fixture->generateHash()));
+    }
 
-		$this->assertSame('index.php?id=1616&tx_solr[q]=sheytan&tx_subforms_feedback[action]=action', $this->fixture->removeChashParamaterFromString($url));
-	}
-
-	/**
-	 * @test
-	 */
-	public function hashWithLengthFiveIsGenerated() {
-		$this->fixture->method('isUniqueHash')->willReturn(TRUE);
-		$this->assertSame(5, strlen($this->fixture->generateHash()));
-	}
-
-	/**
-	 * @test
-	 */
-	public function aNewHashIsGeneratedOnCollisions() {
-		$this->fixture->method('isUniqueHash')->will($this->onConsecutiveCalls(FALSE, TRUE));
-		$this->assertSame(5, strlen($this->fixture->generateHash()));
-	}
+    /**
+     * @test
+     */
+    public function aNewHashIsGeneratedOnCollisions()
+    {
+        $this->fixture->method('isUniqueHash')->will($this->onConsecutiveCalls(FALSE, TRUE));
+        $this->assertSame(5, strlen($this->fixture->generateHash()));
+    }
 
 }

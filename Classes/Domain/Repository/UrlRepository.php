@@ -1,5 +1,6 @@
 <?php
 namespace Subugoe\Shorts\Domain\Repository;
+
 /* * *************************************************************
  *  Copyright notice
  *
@@ -29,24 +30,26 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractValueObject;
 /**
  * Repository for URL
  */
-class UrlRepository extends AbstractValueObject {
+class UrlRepository extends AbstractValueObject
+{
 
-	/**
-	 * Finds a short Url by a page string
-	 *
-	 * @param \string $page
-	 * @return array
-	 */
-	public function findShortUrlByPage($page) {
+    /**
+     * Finds a short Url by a page string
+     *
+     * @param \string $page
+     * @return array
+     */
+    public function findShortUrlByPage($page)
+    {
 
-		$result = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows(
-			'short_url, url',
-			'tx_shorts_domain_model_url',
-			sprintf('url = \'%s\'', $page),
-			'',
-			'',
-			1
-		);
-		return $result;
-	}
+        $result = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows(
+            'short_url, url',
+            'tx_shorts_domain_model_url',
+            sprintf('url = \'%s\'', $page),
+            '',
+            '',
+            1
+        );
+        return $result;
+    }
 }

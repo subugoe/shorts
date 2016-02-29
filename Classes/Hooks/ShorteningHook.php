@@ -29,48 +29,51 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * Calling shortener service before url encoding happens
  */
-class user_Tx_Shortener_Hooks_ShorteningHook {
+class user_Tx_Shortener_Hooks_ShorteningHook
+{
 
-	/**
-	 * @var int
-	 */
-	protected $pageId;
+    /**
+     * @var int
+     */
+    protected $pageId;
 
-	/**
-	 * @var \Subugoe\Shorts\Service\ShorteningService
-	 */
-	protected $shorteningService;
+    /**
+     * @var \Subugoe\Shorts\Service\ShorteningService
+     */
+    protected $shorteningService;
 
-	/**
-	 * Initializes defaults
-	 */
-	public function initialize() {
-		$this->shorteningService = GeneralUtility::makeInstance(ShorteningService::class);
-	}
+    /**
+     * Starting hook action
+     * @param array $hookParams
+     * @param \tx_realurl $pObj
+     * @return void
+     */
+    public function generateShortUrl($hookParams, $pObj)
+    {
 
-	/**
-	 * Starting hook action
-	 * @param array $hookParams
-	 * @param \tx_realurl $pObj
-	 * @return void
-	 */
-	public function generateShortUrl($hookParams, $pObj) {
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
-		if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            $this->initialize();
 
-			$this->initialize();
+            $urlParameters = $this->shorteningService->removeChashParamaterFromString($hookParams['params']['LD']['totalURL']);
 
-			$urlParameters = $this->shorteningService->removeChashParamaterFromString($hookParams['params']['LD']['totalURL']);
+            // save the uid of the page
+            $this->pageId = $hookParams['params']['args']['page']['uid'];
 
-			// save the uid of the page
-			$this->pageId = $hookParams['params']['args']['page']['uid'];
+            if ($this->shorteningService->isAlreadyInDB($urlParameters) === FALSE) {
+                $urlHash = $this->shorteningService->generateHash($urlParameters);
 
-			if ($this->shorteningService->isAlreadyInDB($urlParameters) === FALSE) {
-				$urlHash = $this->shorteningService->generateHash($urlParameters);
+                $this->shorteningService->insertShortUrlIntoDB($urlParameters, $urlHash, $this->pageId);
+            }
+        }
+    }
 
-				$this->shorteningService->insertShortUrlIntoDB($urlParameters, $urlHash, $this->pageId);
-			}
-		}
-	}
+    /**
+     * Initializes defaults
+     */
+    public function initialize()
+    {
+        $this->shorteningService = GeneralUtility::makeInstance(ShorteningService::class);
+    }
 
 }

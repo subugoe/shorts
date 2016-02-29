@@ -32,26 +32,29 @@ use TYPO3\CMS\Core\Tests\BaseTestCase;
  *
  * @package shorts
  */
-class UrlControllerTest extends BaseTestCase {
-	/**
-	 * @var UrlController
-	 */
-	protected $fixture;
+class UrlControllerTest extends BaseTestCase
+{
+    /**
+     * @var UrlController
+     */
+    protected $fixture;
 
-	/**
-	 * @return void
-	 */
-	public function setUp() {
-		$this->fixture = $this->getAccessibleMock(UrlController::class, [], []);
-	}
+    /**
+     * @return void
+     */
+    public function setUp()
+    {
+        $this->fixture = $this->getAccessibleMock(UrlController::class, [], []);
+    }
 
-	/**
-	 * @test
-	 * @return void
-	 */
-	public function testPageIdSetting(){
-		$this->fixture->pageId = 3;
-		$this->assertEquals($this->fixture->pageId, 3);
-	}
+    /**
+     * @test
+     * @return void
+     */
+    public function testPageIdSetting()
+    {
+        $this->fixture->pageId = 3;
+        $this->assertEquals($this->fixture->pageId, 3);
+    }
 
 }

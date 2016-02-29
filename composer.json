@@ -6,7 +6,7 @@
         "jakeasmith/http_build_url": "0.1.*",
         "phpunit/phpunit": "~4.6"
     },
-    "license": "GPL",
+    "license": "GPL-2.0",
     "authors": [
         {
             "name": "Ingo Pfennigstorf",
