@@ -35,7 +35,7 @@ function redirectToLongURL($shortUrl)
     $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
         'pid, uid, short_url, url',
         'tx_shorts_domain_model_url',
-        'short_url = "' . $shortUrl . '"',
+        'BINARY short_url = "' . $shortUrl . '"',
         'uid DESC', '',
         '1'
     );

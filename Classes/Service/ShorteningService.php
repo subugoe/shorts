@@ -176,7 +176,7 @@ class ShorteningService
         $res = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
             'short_url',
             'tx_shorts_domain_model_url',
-            'short_url = "' . $shortHash . '"',
+            'BINARY short_url = "' . $shortHash . '"',
             '',
             '',
             ''
