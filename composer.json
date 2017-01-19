@@ -12,5 +12,13 @@
             "name": "Ingo Pfennigstorf",
             "email": "i.pfennigstorf@gmail.com"
         }
-    ]
+    ],
+    "autoload": {
+        "psr-4": {
+            "Subugoe\\Shorts\\": "Classes/"
+        }
+    },
+    "suggest": {
+        "jakeasmith/http_build_url": "0.1.*"
+    }
 }
