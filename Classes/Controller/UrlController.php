@@ -25,9 +25,11 @@ namespace Subugoe\Shorts\Controller;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 /**
  * Controller for the URL object
@@ -47,20 +49,25 @@ class UrlController extends ActionController
 
     /**
      * @var \Subugoe\Shorts\Service\ShorteningService
-     * @inject
      */
     protected $shorteningService;
 
     /**
      * @var \Subugoe\Shorts\Domain\Repository\UrlRepository
-     * @inject
      */
     protected $urlRepository;
 
     /**
-     * @var \TYPO3\CMS\Core\Page\PageRenderer
+     * UrlController constructor.
+     * @param \Subugoe\Shorts\Service\ShorteningService $shorteningService
+     * @param \Subugoe\Shorts\Domain\Repository\UrlRepository $urlRepository
      */
-    protected $pageRenderer;
+    public function __construct(\Subugoe\Shorts\Service\ShorteningService $shorteningService, \Subugoe\Shorts\Domain\Repository\UrlRepository $urlRepository)
+    {
+        parent::__construct();
+        $this->shorteningService = $shorteningService;
+        $this->urlRepository = $urlRepository;
+    }
 
     /**
      * Initialisierung globaler Werte
@@ -72,7 +79,6 @@ class UrlController extends ActionController
 
         // assign the page Id
         $this->pageId = $GLOBALS['TSFE']->id;
-        $this->pageRenderer = $GLOBALS['TSFE']->getPageRenderer();
 
         $this->addResourcesToHead();
 
@@ -128,8 +134,14 @@ class UrlController extends ActionController
      */
     protected function addResourcesToHead()
     {
-        $this->pageRenderer->addJsFile(ExtensionManagementUtility::siteRelPath('shorts') . 'Resources/Public/JavaScript/Shorts.js');
-        $this->pageRenderer->addCssFile(ExtensionManagementUtility::siteRelPath('shorts') . 'Resources/Public/Css/Shorts.css');
+        /** @var ObjectManager $objectManager */
+        $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
+
+        /** @var PageRenderer $pageRenderer */
+        $pageRenderer = $objectManager->get(PageRenderer::class);
+
+        $pageRenderer->addJsFile(ExtensionManagementUtility::siteRelPath('shorts') . 'Resources/Public/JavaScript/Shorts.js');
+        $pageRenderer->addCssFile(ExtensionManagementUtility::siteRelPath('shorts') . 'Resources/Public/Css/Shorts.css');
     }
 
 }
