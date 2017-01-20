@@ -19,6 +19,7 @@
         }
     },
     "suggest": {
-        "jakeasmith/http_build_url": "0.1.*"
+        "jakeasmith/http_build_url": "0.1.*",
+        "typo3-ter/pagepath": "^1.0.0"
     }
 }
