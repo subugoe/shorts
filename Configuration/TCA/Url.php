@@ -20,6 +20,7 @@ $TCA['tx_shorts_domain_model_url'] = [
             'label' => 'LLL:EXT:lang/locallang_general.php:LGL.language',
             'config' => [
                 'type' => 'select',
+                'renderType' => 'selectSingle',
                 'foreign_table' => 'sys_language',
                 'foreign_table_where' => 'ORDER BY sys_language.title',
                 'items' => [
