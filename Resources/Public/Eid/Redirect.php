@@ -43,11 +43,18 @@ function redirectToLongURL($shortUrl)
     $match = '/index.php\?id=[0-9]*/';
 
     while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+        $longUrl = $row['url'];
         $parameters = preg_replace($match, '', $row['url']);
         $pagePath = \tx_pagepath_api::getPagePath($row['pid'], $parameters);
     }
 
-    return $pagePath;
+    // Wenn pagepath kein Ergebnis liefert (pagepath kann z.B. nicht mit getrennten Docker Container für PHP und WEB umgehen, wegen unterschiedlicher IPs).
+    // wird die Paranmter URL zurückgegeben.
+    if($pagePath)
+        return $pagePath;
+    else {
+        return t3lib_div::getIndpEnv('TYPO3_SITE_URL') . $longUrl;
+    }
 }
 
 $shortUrl = \TYPO3\CMS\Core\Utility\GeneralUtility::_GET('shortUrl');
